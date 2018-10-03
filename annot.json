@@ -1,0 +1,109 @@
+{
+    "plugins" : [
+      {
+         "location" : "./plugins/WebApollo",
+         "name" : "WebApollo"
+      },
+      {
+         "location" : "./plugins/GCContent",
+         "name" : "GCContent"
+      },
+      {
+         "location" : "./plugins/CACAO",
+         "name" : "CACAO"
+      }
+   ],
+    "share_link" : 0,
+    "tracks" : [
+    {
+         "autocomplete" : "none",
+         "style" : {
+            "className" : "annot",
+            "renderClassName" : "annot-render",
+            "subfeatureClasses" : {
+               "non_canonical_three_prime_splice_site" : "noncanonical-splice-site",
+               "wholeCDS" : null,
+               "exon" : "container-100pct",
+               "CDS" : "annot-CDS",
+               "non_canonical_five_prime_splice_site" : "noncanonical-splice-site",
+               "UTR" : "annot-UTR"
+            },
+            "arrowheadClass" : "annot-arrowhead",
+            "alternateClasses" : {
+               "terminator" : {
+                  "renderClassName" : "black-80pct annot-apollo",
+                  "className" : "black-80pct"
+               },
+               "transposable_element" : {
+                  "renderClassName" : "blue-ibeam-render annot-apollo",
+                  "className" : "blue-ibeam"
+               },
+               "pseudogene" : {
+                  "renderClassName" : "gray-center-30pct annot-apollo",
+                  "className" : "light-purple-80pct"
+               },
+               "snRNA" : {
+                  "renderClassName" : "gray-center-30pct annot-apollo",
+                  "className" : "brightgreen-80pct"
+               },
+               "rRNA" : {
+                  "renderClassName" : "gray-center-30pct annot-apollo",
+                  "className" : "brightgreen-80pct"
+               },
+               "snoRNA" : {
+                  "renderClassName" : "gray-center-30pct annot-apollo",
+                  "className" : "brightgreen-80pct"
+               },
+               "repeat_region" : {
+                  "className" : "magenta-80pct"
+               },
+               "ncRNA" : {
+                  "renderClassName" : "gray-center-30pct annot-apollo",
+                  "className" : "brightgreen-80pct"
+               },
+               "miRNA" : {
+                  "renderClassName" : "gray-center-30pct annot-apollo",
+                  "className" : "brightgreen-80pct"
+               },
+               "tRNA" : {
+                  "renderClassName" : "gray-center-30pct annot-apollo",
+                  "className" : "brightgreen-80pct"
+               }
+            },
+            "uniqueIdField" : "id",
+            "centerSubFeature" : {
+               "non_canonical_three_prime_splice_site" : false,
+               "non_canonical_five_prime_splice_site" : false
+            }
+         },
+         "key" : "User-created Annotations",
+         "storeClass" : "WebApollo/Store/SeqFeature/ScratchPad",
+         "maxHeight" : 600,
+         "phase" : 0,
+         "compress" : 0,
+         "label" : "Annotations",
+         "type" : "WebApollo/View/Track/AnnotTrack",
+         "subfeatures" : 1
+      },
+      {
+        "storeClass" : "JBrowse/Store/SeqFeature/SequenceChunks",
+        "type": "GCContent/View/Track/GCContentXY",
+        "label": "GC Skew",
+        "urlTemplate" : "../../../data/seq/{refseq_dirpath}/{refseq}-",
+        "gcMode": "skew",
+        "min_score": -1,
+        "bicolor_pivot": 0
+      },
+      {
+        "storeClass": "CACAO/Store/SeqFeature/REST",
+        "type": "CACAO/View/Track/CanvasFeatures",
+        "label": "CACAO",
+        "key": "CPT GO Annotations",
+        "baseUrl": "https://cpt.tamu.edu/cacao-backend/jbrowse/",
+      }
+    ],
+   "favicon" : "./plugins/WebApollo/img/webapollo_favicon.ico",
+   "alwaysOnTracks" : "DNA,Annotations",
+   "classicMenu" : 1,
+   "formatVersion" : 1
+}
