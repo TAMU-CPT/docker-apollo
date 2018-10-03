@@ -11,7 +11,7 @@ environments {
 
             driverClassName = "org.postgresql.Driver"
             dialect = "org.hibernate.dialect.PostgresPlusDialect"
-            url = "jdbc:postgresql://${System.getenv("WEBAPOLLO_DB_HOST")?:"127.0.0.1"}/${System.getenv("WEBAPOLLO_DB_NAME")?:"apollo"}"
+            url = System.getenv("WEBAPOLLO_DB_URI")
 
             properties {
                 // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
@@ -35,14 +35,13 @@ environments {
             }
         }
         dataSource_chado {
-            dbCreate = "update"
-            username = System.getenv("CHADO_DB_USERNAME") ?: "apollo"
-            password = System.getenv("CHADO_DB_PASSWORD") ?: "apollo"
+            dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
+            username = System.getenv("WEBAPOLLO_CHADO_DB_USERNAME")
+            password = System.getenv("WEBAPOLLO_CHADO_DB_PASSWORD")
 
             driverClassName = "org.postgresql.Driver"
             dialect = "org.hibernate.dialect.PostgresPlusDialect"
-
-            url = "jdbc:postgresql://${System.getenv("CHADO_DB_HOST")?:"127.0.0.1"}/${System.getenv("CHADO_DB_NAME")?:"chado"}"
+            url = System.getenv("WEBAPOLLO_CHADO_DB_URI")
 
             properties {
                 // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation
@@ -69,32 +68,47 @@ environments {
 }
 
 apollo {
-    default_minimum_intron_size = System.getenv("WEBAPOLLO_MINIMUM_INTRON_SIZE") ? System.getenv("WEBAPOLLO_MINIMUM_INTRON_SIZE").toInteger() : 1
-    history_size = System.getenv("WEBAPOLLO_HISTORY_SIZE") ? System.getenv("WEBAPOLLO_HISTORY_SIZE").toInteger() : 0
-    overlapper_class = System.getenv("WEBAPOLLO_OVERLAPPER_CLASS") ?: "org.bbop.apollo.sequence.OrfOverlapper"
-    use_cds_for_new_transcripts = System.getenv("WEBAPOLLO_CDS_FOR_NEW_TRANSCRIPTS").equals("true") // will default to false
-    feature_has_dbxrefs = System.getenv("WEBAPOLLO_FEATURE_HAS_DBXREFS") ?: true
-    feature_has_attributes = System.getenv("WEBAPOLLO_FEATURE_HAS_ATTRS") ?: true
-    feature_has_pubmed_ids = System.getenv("WEBAPOLLO_FEATURE_HAS_PUBMED") ?: true
-    feature_has_go_ids = System.getenv("WEBAPOLLO_FEATURE_HAS_GO") ?: true
-    feature_has_comments = System.getenv("WEBAPOLLO_FEATURE_HAS_COMMENTS") ?: true
-    feature_has_status = System.getenv("WEBAPOLLO_FEATURE_HAS_STATUS") ?: true
-    translation_table = "/config/translation_tables/ncbi_" + (System.getenv("WEBAPOLLO_TRANSLATION_TABLE") ?: "1") + "_translation_table.txt"
-    get_translation_code = System.getenv("WEBAPOLLO_TRANSLATION_TABLE") ? System.getenv("WEBAPOLLO_TRANSLATION_TABLE").toInteger() : 1
+    default_minimum_intron_size = 1
+    history_size                = System.getenv("WEBAPOLLO_HISTORY_SIZE") ? System.getenv("WEBAPOLLO_HISTORY_SIZE").toInteger() : 0
+    overlapper_class            = System.getenv("WEBAPOLLO_OVERLAPPER_CLASS") ?: "org.bbop.apollo.sequence.OrfOverlapper"
+    use_cds_for_new_transcripts = false
+    feature_has_dbxrefs         = true
+    feature_has_attributes      = true
+    feature_has_pubmed_ids      = false
+    feature_has_go_ids          = false
+    feature_has_comments        = true
+    feature_has_status          = true
+    translation_table           = "/config/translation_tables/ncbi_11_translation_table.txt"
+    get_translation_code        = 11
+    user_pure_memory_store = true
+    is_partial_translation_allowed = false // unused so far
+    export_subfeature_attrs = true
+
+    // settings for Chado export
+    // set chado_export_fasta_for_sequence if you want the reference sequence FASTA to be exported into the database
+    // Note: Enabling this feature can be memory intensive
+    chado_export_fasta_for_sequence = true
+    // set chado_export_fasta_for_cds if you want the CDS FASTA to be exported into the database
+    chado_export_fasta_for_cds = false
 
     // TODO: should come from config or via preferences database
-    splice_donor_sites = System.getenv("WEBAPOLLO_SPLICE_DONOR_SITES") ? System.getenv("WEBAPOLLO_SPLICE_DONOR_SITES").split(",") : ["GT"]
-    splice_acceptor_sites = System.getenv("WEBAPOLLO_SPLICE_ACCEPTOR_SITES") ? System.getenv("WEBAPOLLO_SPLICE_ACCEPTOR_SITES").split(",") : ["AG"]
-    gff3.source = System.getenv("WEBAPOLLO_GFF3_SOURCE") ?: "."
+    splice_donor_sites = []
+    splice_acceptor_sites = []
+    gff3.source = "CPT"
 
-    google_analytics = System.getenv("WEBAPOLLO_GOOGLE_ANALYTICS_ID") ?: ["UA-62921593-1"]
+    authentications = [
+        [
+            "name":"Remote User Authenticator",
+            "className":"remoteUserAuthenticatorService",
+            "active":true
+        ],
+        [
+            "name":"Username Password Authenticator",
+            "className":"usernamePasswordAuthenticatorService",
+            "active":true
+        ]
+    ]
 
-    admin{
-        username = System.getenv("APOLLO_ADMIN_EMAIL") ?: "admin@local.host"
-        password = System.getenv("APOLLO_ADMIN_PASSWORD") ?: "password"
-        firstName = System.getenv("APOLLO_ADMIN_FIRST_NAME") ?: "Ad"
-        lastName = System.getenv("APOLLO_ADMIN_LAST_NAME") ?: "min"
-    }
 }
 
 jbrowse {
@@ -118,11 +132,23 @@ jbrowse {
         HideTrackLabels{
             included = true
         }
-//        GCContent{
-//            git = 'https://github.com/cmdcolin/GCContent'
-//            branch = 'master'
-//            alwaysRecheck = "true"
-//            alwaysPull = "true"
-//        }
+        GCContent {
+            git = 'https://github.com/elsiklab/gccontent'
+            branch = 'master'
+            alwaysRecheck = "true"
+            alwaysPull = "true"
+        }
+        CACAO {
+            git = 'https://github.com/TAMU-CPT/cacao-apollo-plugin'
+            branch = 'master'
+            alwaysRecheck = "true"
+            alwaysPull = "true"
+        }
+        BlastView {
+            git = 'https://github.com/TAMU-CPT/blastview'
+            branch = 'master'
+            alwaysRecheck = "true"
+            alwaysPull = "true"
+        }
     }
 }

@@ -24,6 +24,9 @@ RUN curl -L https://github.com/GMOD/Apollo/archive/${WEBAPOLLO_VERSION}.tar.gz |
 # install grails
 COPY build.sh /bin/build.sh
 ADD apollo-config.groovy /apollo/apollo-config.groovy
+ADD annot.json /apollo/annot.json
+ADD AnnotTrack.js /apollo/AnnotTrack.js
+ADD cpt.css /apollo/cpt.css
 
 RUN chown -R apollo:apollo /apollo
 USER apollo
