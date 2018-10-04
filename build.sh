@@ -11,9 +11,9 @@ cd /apollo/ && \
 	cp /apollo/AnnotTrack.js /apollo/client/apollo/js/View/Track/AnnotTrack.js && \
 	cp /apollo/AnnotTrack.js /apollo/web-app/jbrowse/plugins/WebApollo/js/View/Track/AnnotTrack.js && \
 	cp /apollo/AnnotTrack.js /apollo/jbrowse-download/plugins/WebApollo/js/View/Track/AnnotTrack.js && \
-	./apollo deploy && \
+	./apollo clean-all && ./apollo deploy && \
 	# Move to tmp dir
-	cp /apollo/target/apollo*.war /tmp/ && \
+	cp /apollo/target/apollo*.war /tmp/apollo.war && \
     # remove cruft from image
     rm -rf /apollo/ || true && \
     # move the war back to standard location
