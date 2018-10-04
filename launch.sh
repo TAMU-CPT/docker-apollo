@@ -18,6 +18,5 @@ if [ ! -z "$WEBAPOLLO_DB_HOST" ]; then
 	done;
 fi
 
-o "Restarting tomcat with $CATALINA_HOME"
 service tomcat8 restart
 
