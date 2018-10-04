@@ -1,9 +1,11 @@
 #!/bin/bash
 # https://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Naming
+export CATALINA_HOME="${CATALINA_HOME:-/usr/local/tomcat/}"
 FIXED_CTX=$(echo "${CONTEXT_PATH}" | sed 's|/|#|g')
 WAR_FILE=${CATALINA_HOME}/webapps/${FIXED_CTX}.war
 
-rm -rf ${CATALINA_HOME}/webapps/*
+
+cp ${CATALINA_HOME}/apollo.war ${WAR_FILE}
 
 cp /apollo/apollo.war ${WAR_FILE}
 if [ ! -z "$WEBAPOLLO_DB_HOST" ]; then
@@ -18,5 +20,6 @@ if [ ! -z "$WEBAPOLLO_DB_HOST" ]; then
 	done;
 fi
 
+echo "Restarting tomcat with $CATALINA_HOME"
 service tomcat8 restart
 
