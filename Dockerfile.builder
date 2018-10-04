@@ -1,7 +1,7 @@
 # WebApollo
 # VERSION 2.0
 FROM tomcat:8-jre8
-MAINTAINER Eric Rasche <esr@tamu.edu>
+MAINTAINER Cory Maughmer <cory.maughmer@tamu.edu>
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
@@ -16,9 +16,9 @@ RUN npm install -g bower && \
 	cp /usr/lib/jvm/java-8-openjdk-amd64/lib/tools.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/tools.jar && \
 	useradd -ms /bin/bash -d /apollo apollo
 
-# 2.0.6+ with CPT Viral Annotation Additinos
-ENV WEBAPOLLO_VERSION d2419f2dcd73a4498b5821399eebf1e6a0f2e753
-RUN curl -L https://github.com/erasche/Apollo/archive/${WEBAPOLLO_VERSION}.tar.gz | tar xzf - --strip-components=1 -C /apollo
+# CPT Viral Annotation branch
+ENV WEBAPOLLO_VERSION 5a50be2546d840ad6b972022879e4bb00c911d80
+RUN curl -L https://github.com/TAMU-CPT/Apollo/archive/${WEBAPOLLO_VERSION}.tar.gz | tar xzf - --strip-components=1 -C /apollo
 
 COPY build.sh /bin/build.sh
 ADD apollo-config.groovy /apollo/apollo-config.groovy
