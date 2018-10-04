@@ -11,9 +11,13 @@ cd /apollo/ && \
 	cp /apollo/AnnotTrack.js /apollo/client/apollo/js/View/Track/AnnotTrack.js && \
 	cp /apollo/AnnotTrack.js /apollo/web-app/jbrowse/plugins/WebApollo/js/View/Track/AnnotTrack.js && \
 	cp /apollo/AnnotTrack.js /apollo/jbrowse-download/plugins/WebApollo/js/View/Track/AnnotTrack.js && \
-	./apollo clean-all && ./apollo deploy && \
+	./apollo deploy && \
 	# Move to tmp dir
-	cp /apollo/target/apollo*.war /tmp/apollo.war && \
-	# Before moving back into a standardized location (that we have write access to)
-	mv /tmp/apollo.war /apollo/apollo.war
+	cp /apollo/target/apollo*.war /tmp/ && \
+    # remove cruft from image
+    rm -rf /apollo/ || true && \
+    # move the war back to standard location
+    mv /tmp/apollo*.war /apollo/ && \
+    # symlink to the expected name
+    ln -s /apollo/apollo*.war /apollo/apollo.war
 
