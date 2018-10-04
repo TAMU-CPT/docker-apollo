@@ -17,7 +17,5 @@ cd /apollo/ && \
     # remove cruft from image
     rm -rf /apollo/ || true && \
     # move the war back to standard location
-    mv /tmp/apollo*.war /apollo/ && \
-    # symlink to the expected name
-    ln -s /apollo/apollo*.war /apollo/apollo.war
+    mv /tmp/apollo.war /apollo/ 
 
