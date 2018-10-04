@@ -17,5 +17,6 @@ if [ ! -z "$WEBAPOLLO_DB_HOST" ]; then
 		sleep 1;
 	done;
 fi
+unset CATALINA_HOME
+service tomcat8 restart
 
-catalina.sh run
