@@ -20,3 +20,8 @@ fi
 unset CATALINA_HOME
 service tomcat8 restart
 
+if [[ ! -f "var/lib/tomcat8/logs/catalina.out"  ]]; then
+        touch ${CATALINA_HOME}/logs/catalina.out
+fi
+
+tail -f var/lib/tomcat8/logs/catalina.out
