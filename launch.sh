@@ -18,7 +18,7 @@ if [ ! -z "$WEBAPOLLO_DB_HOST" ]; then
 	done;
 fi
 
-catalina.sh
+catalina.sh run
 
 if [[ ! -f "${CATALINA_HOME}/logs/catalina.out"  ]]; then
         touch ${CATALINA_HOME}/logs/catalina.out
