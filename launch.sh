@@ -18,10 +18,10 @@ if [ ! -z "$WEBAPOLLO_DB_HOST" ]; then
 	done;
 fi
 
-service tomcat8 restart
+catalina.sh
 
-if [[ ! -f "var/lib/tomcat8/logs/catalina.out"  ]]; then
+if [[ ! -f "${CATALINA_HOME}/logs/catalina.out"  ]]; then
         touch ${CATALINA_HOME}/logs/catalina.out
 fi
 
-tail -f var/lib/tomcat8/logs/catalina.out
+tail -f ${CATALINA_HOME}/logs/catalina.out
