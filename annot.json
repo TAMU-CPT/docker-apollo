@@ -8,10 +8,10 @@
          "location" : "./plugins/GCContent",
          "name" : "GCContent"
       },
-      {
-         "location" : "./plugins/CACAO",
-         "name" : "CACAO"
-      }
+      //{
+      //   "location" : "./plugins/CACAO",
+      //   "name" : "CACAO"
+      //}
    ],
     "share_link" : 0,
     "tracks" : [
@@ -94,13 +94,13 @@
         "min_score": -1,
         "bicolor_pivot": 0
       },
-      {
-        "storeClass": "CACAO/Store/SeqFeature/REST",
-        "type": "CACAO/View/Track/CanvasFeatures",
-        "label": "CACAO",
-        "key": "CPT GO Annotations",
-        "baseUrl": "https://cpt.tamu.edu/cacao-backend/jbrowse/",
-      }
+      //{
+      //  "storeClass": "CACAO/Store/SeqFeature/REST",
+      //  "type": "CACAO/View/Track/CanvasFeatures",
+      //  "label": "CACAO",
+      //  "key": "CPT GO Annotations",
+      //  "baseUrl": "https://cpt.tamu.edu/cacao-backend/jbrowse/",
+      //}
     ],
    "favicon" : "./plugins/WebApollo/img/webapollo_favicon.ico",
    "alwaysOnTracks" : "DNA,Annotations",
