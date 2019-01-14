@@ -15,6 +15,8 @@ RUN apt-get -qq update --fix-missing && \
 	apt-get --no-install-recommends -y install nodejs && \
 	apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+RUN npm i -g yarn 
+
 RUN cp /usr/lib/jvm/java-8-openjdk-amd64/lib/tools.jar /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/ext/tools.jar && \
 	useradd -ms /bin/bash -d /apollo apollo
 
@@ -30,6 +32,10 @@ ADD AnnotTrack.js /apollo/AnnotTrack.js
 ADD cpt.css /apollo/cpt.css
 
 RUN chown -R apollo:apollo /apollo
+RUN curl -s "http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/blat/blat" -o /usr/local/bin/blat
+RUN chmod +x /usr/local/bin/blat
+
+
 USER apollo
 RUN curl -s get.sdkman.io | bash
 RUN /bin/bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && yes | sdk install grails 2.5.5"
