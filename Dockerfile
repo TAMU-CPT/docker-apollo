@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get -qq update --fix-missing && \
 	apt-get --no-install-recommends -y install \
-	git build-essential maven tomcat8 libpq-dev postgresql-common openjdk-8-jdk wget \
+	git build-essential maven libpq-dev postgresql-common openjdk-8-jdk wget \
 	postgresql postgresql-client xmlstarlet netcat libpng-dev \
 	zlib1g-dev libexpat1-dev ant curl ssl-cert zip unzip
 
@@ -45,17 +45,18 @@ RUN /bin/bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && yes | sdk install g
 RUN /bin/bash -c "source $HOME/.profile && source $HOME/.sdkman/bin/sdkman-init.sh && /bin/bash /bin/build.sh"
 
 USER root
-ENV CATALINA_HOME=/var/lib/tomcat8
-RUN rm -rf ${CATALINA_HOME}/webapps/* && \
-	cp /apollo/apollo*.war ${CATALINA_HOME}/apollo.war
+#ENV CATALINA_HOME=/var/lib/tomcat8
+#RUN rm -rf ${CATALINA_HOME}/webapps/* && \
+#	cp /apollo/apollo*.war ${CATALINA_HOME}/apollo.war
 
 ENV CONTEXT_PATH ROOT
 
 # Download chado schema
-RUN wget --quiet https://github.com/erasche/chado-schema-builder/releases/download/1.31-jenkins97/chado-1.31.sql.gz -O /chado.sql.gz && \
-	gunzip /chado.sql.gz
+#RUN wget --quiet https://github.com/erasche/chado-schema-builder/releases/download/1.31-jenkins97/chado-1.31.sql.gz -O /chado.sql.gz && \
+#	gunzip /chado.sql.gz
 
 ADD launch.sh /launch.sh
 CMD "/launch.sh"
+
 
 
