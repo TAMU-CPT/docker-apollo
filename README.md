@@ -29,15 +29,12 @@ Install [docker](https://docs.docker.com/engine/installation/) for your system i
 
 Choose an option:
 
-- To test a versioned release to test installation, e.g.: `docker run -it -p 8888:8080 quay.io/gmod/docker-apollo:2.2.0`  [Other available versions](https://quay.io/repository/gmod/docker-apollo?tab=tags)
+- To test a versioned release to test installation, e.g.: `docker run -it -p 8888:8080  -v /directory/to/jbrowse/files:/data quay.io/gmod/docker-apollo:2.2.0`  [Other available versions](https://quay.io/repository/gmod/docker-apollo?tab=tags)
 
-- Install a latest release to test installation: `docker run -it -p 8888:8080 gmod/apollo:latest` 
+- Install a latest release to test installation: `docker run -it -p 8888:8080 -v /directory/to/jbrowse/files:/data gmod/apollo:latest` 
   -  To make sure you have the latest pull with ```docker pull gmod/apollo``` to fetch newer versions
   
-- If using within a larger context (e.g., as part of a docker-compose script) you can run an ```apollo-only``` branch provides only apollo + tomcat (no PostgreSQL):  
-  - `docker run -it -p 8888:8080 gmod/apollo:apollo-only` 
-  
-- To run in production against JBrowse data and a persistent database (you can create an empty directory called `postgres-data`):  
+- To **run in production** against JBrowse data and a persistent database (you can create an empty directory called `postgres-data`):  
     - `docker run -it -v /jbrowse/root/directory/:/data -v postgres-data:/var/lib/postgresql -p 8888:8080 gmod/apollo:latest`
 
 - You can run production using the build created by quay.io instead (https://quay.io/repository/gmod/docker-apollo):

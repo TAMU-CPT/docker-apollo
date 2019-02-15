@@ -114,18 +114,18 @@ apollo {
 jbrowse {
     git {
         url = "https://github.com/GMOD/jbrowse"
-        branch = "1.15.4-release"
+        branch = "1.16.2-rc1"
     }
     plugins {
         WebApollo{
             included = true
         }
-//        NeatHTMLFeatures{
-//            included = System.getenv("WEBAPOLLO_JBROWSE_PLUGIN_NEATHTML") ?: true
-//        }
-//        NeatCanvasFeatures{
-//            included = System.getenv("WEBAPOLLO_JBROWSE_PLUGIN_NEATCANVAS") ?: true
-//        }
+		NeatHTMLFeatures{
+			included = System.getenv("WEBAPOLLO_JBROWSE_PLUGIN_NEATHTML") ?: true
+		}
+		NeatCanvasFeatures{
+			included = System.getenv("WEBAPOLLO_JBROWSE_PLUGIN_NEATCANVAS") ?: true
+		}
         RegexSequenceSearch{
             included = true
         }
