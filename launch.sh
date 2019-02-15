@@ -67,25 +67,29 @@ if [[ "$?" == "1" ]]; then
 fi
 
 # https://tomcat.apache.org/tomcat-8.0-doc/config/context.html#Naming
+export CATALINA_HOME="${CATALINA_HOME:-/usr/local/tomcat/}"
 FIXED_CTX=$(echo "${CONTEXT_PATH}" | sed 's|/|#|g')
 WAR_FILE=${CATALINA_HOME}/webapps/${FIXED_CTX}.war
 
-rm -rf ${CATALINA_HOME}/webapps/*
+#rm -rf ${CATALINA_HOME}/webapps/*
+
+echo "Restarting tomcat with $CATALINA_HOME"
+service tomcat8 restart
 
 cp /apollo/apollo.war ${WAR_FILE}
-if [ ! -z "$WEBAPOLLO_DB_HOST" ]; then
-	until pg_isready -h $WEBAPOLLO_DB_HOST -p $WEBAPOLLO_DB_PORT -U $WEBAPOLLO_DB_USERNAME -d $WEBAPOLLO_DB_NAME; do
-		echo "Sleeping on DB"
-		sleep 1;
-	done;
+#if [ ! -z "$WEBAPOLLO_DB_HOST" ]; then
+#	until pg_isready -h $WEBAPOLLO_DB_HOST -p $WEBAPOLLO_DB_PORT -U $WEBAPOLLO_DB_USERNAME -d $WEBAPOLLO_DB_NAME; do
+#		echo "Sleeping on DB"
+#		sleep 1;
+#	done;
 
-	until pg_isready -h $WEBAPOLLO_CHADO_DB_HOST -p $WEBAPOLLO_CHADO_DB_PORT -U $WEBAPOLLO_CHADO_DB_USERNAME -d $WEBAPOLLO_CHADO_DB_NAME; do
-		echo "Sleeping on Chado DB"
-		sleep 1;
-	done;
-fi
+#	until pg_isready -h $WEBAPOLLO_CHADO_DB_HOST -p $WEBAPOLLO_CHADO_DB_PORT -U $WEBAPOLLO_CHADO_DB_USERNAME -d $WEBAPOLLO_CHADO_DB_NAME; do
+#		echo "Sleeping on Chado DB"
+#		sleep 1;
+#	done;
+#fi
 
-catalina.sh run
+#catalina.sh run
 
 if [[ ! -f "${CATALINA_HOME}/logs/catalina.out"  ]]; then
         touch ${CATALINA_HOME}/logs/catalina.out
