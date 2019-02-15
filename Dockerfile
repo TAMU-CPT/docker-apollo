@@ -21,7 +21,7 @@ RUN cp /usr/lib/jvm/java-8-openjdk-amd64/lib/tools.jar /usr/lib/jvm/java-8-openj
 	useradd -ms /bin/bash -d /apollo apollo
 
 # use the TAMU-CPT Viral Annotation branch for Apollo
-ENV WEBAPOLLO_VERSION v2.2.0.CPT-beta
+ENV WEBAPOLLO_VERSION 2b808a07d8610b1c37019ff84756a3a5c132e7e1
 RUN curl -L https://github.com/TAMU-CPT/Apollo/archive/${WEBAPOLLO_VERSION}.tar.gz | tar xzf - --strip-components=1 -C /apollo
 
 # install grails
